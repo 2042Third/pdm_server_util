@@ -39,6 +39,11 @@ int util::run_util(){
       rderr(system("sh /usr/local/tomcat/bin/shutdown.sh"));
       rderr(system("sh /usr/local/tomcat/bin/startup.sh"));
     }
+    else if(i==2){// clean logs
+      if(NON_SILENT_RUNNING)
+        cout<<"Cleaning logs... "<<endl;
+      rderr(system("echo \"\" > /usr/local/tomcat/logs/catalina.out"));
+    }
   }
   return 1;
 }
