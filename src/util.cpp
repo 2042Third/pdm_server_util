@@ -19,10 +19,11 @@ int util::run_util(){
       continue;
     switch(i) {
       case 0 : // logs
-        cmd_b[0]=1;
+        system("cat /usr/local/tomcat/logs/catalina.out");
         break;
       case 1 : // restart
-        cmd_b[1]=1;
+        system("sh /usr/local/tomcat/bin/shutdown.sh");
+        system("sh /usr/local/tomcat/bin/startup.sh");
         break;
     }
   }
