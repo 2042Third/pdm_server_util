@@ -10,7 +10,7 @@
 using namespace std;
 
 #define TOTAL_COMMANDS_COUNT              3 // make sure is same as the length of cmd_b
-#define TOTAL_HEADLESS_COMMANDS_COUNT     1 // make sure is same as the length of cmd_headless
+#define TOTAL_HEADLESS_COMMANDS_COUNT     2 // make sure is same as the length of cmd_headless
 
 class util {
 public:
