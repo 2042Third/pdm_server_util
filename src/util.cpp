@@ -43,6 +43,18 @@ int util::run_util(){
   return 1;
 }
 
+void util::get_help_view (){
+  cout<<"pdm server-side utilities\n help menu\n"<<endl;
+  for(unsigned int i=0 ; i< TOTAL_COMMANDS_COUNT;i++){
+    cout<<cmd[i]<<endl;
+  }
+  cout<<endl;
+  for(unsigned int i=0 ; i< TOTAL_HEADLESS_COMMANDS_COUNT;i++){
+    cout<<cmd_headless[i]<<endl;
+  }
+  cout<<endl;
+}
+
 int util::set_config(char* argv){
   string a = argv;
   for(unsigned int i=0;i<a.size();i++){
@@ -55,9 +67,15 @@ int util::set_config(char* argv){
       case 'X': // cmd_b[1]
         cmd_b[1]=1;
         break;
-      case 'S': // cmd_b[1]
+      case 'c': // cmd_b[2]
+        cmd_b[2]=1;
+        break;
+      case 'S':
         NON_SILENT_RUNNING=0;
         break;
+      case 'h':
+        get_help_view();
+        return 1;
       default :
          cout << "Invalid command \""<< a[i] <<"\""<< endl;
     }

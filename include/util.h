@@ -9,8 +9,8 @@
 
 using namespace std;
 
-#define TOTAL_COMMANDS_COUNT              2
-#define TOTAL_HEADLESS_COMMANDS_COUNT     1
+#define TOTAL_COMMANDS_COUNT              3 // make sure is same as the length of cmd_b
+#define TOTAL_HEADLESS_COMMANDS_COUNT     1 // make sure is same as the length of cmd_headless
 
 class util {
 public:
@@ -18,10 +18,11 @@ public:
   int run_util();
 private:
   int NON_SILENT_RUNNING =1;
-  int cmd_b[2] = {0,0};
-  string cmd[2] = {"-l: See Tomcat Logs", "-X: Restart Tomcat"};
-  string cmd_headless[2] = {"-S: silent"};
+  int cmd_b[3] = {0,0,0};
+  string cmd[3] = {"-l: See Tomcat Logs", "-X: Restart Tomcat", "-c: clean logs"};
+  string cmd_headless[2] = {"-S: silent", "-h: help"};
   int set_config(char* argv);
   int rderr(int err);
+  void get_help_view();
 };
 #endif //SERVER_UTIL
