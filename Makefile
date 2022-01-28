@@ -6,3 +6,6 @@ linux:
 	g++ $(inc) $(srcs) -Wall -o $(app_name)
 linux_debug:
 	g++ $(inc) $(srcs) -Wall -g -DDEBUG -o $(app_name)
+update:
+	make linux
+	cp pdm /usr/local/bin/
