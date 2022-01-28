@@ -1,4 +1,8 @@
+
+app_name = pdm
+inc = -I./include/
+srcs = ./src/util.cpp
 linux:
-	g++ -I./includes/ ./src/util.cpp -Wall -o pdm
+	g++ $(inc) $(srcs) -Wall -o $(app_name)
 linux_debug:
-	g++ -I./includes/ ./src/util.cpp -Wall -o pdm
+	g++ $(inc) $(srcs) -Wall -g -DDEBUG -o $(app_name)

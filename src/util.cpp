@@ -10,21 +10,35 @@
 #include <sstream>
 #include <stdlib.h>
 #include <vector>
+#include <iostream>
+#include <stdio.h>
 
 using namespace std;
 
+int util::rderr (int err){
+  #ifdef DEBUG//debug
+    cout<<"Output: "<< err<<endl;
+    system("ls");
+  #endif//debug
+  return 1;
+}
+
 int util::run_util(){
-  for(unsigned int i; i<TOTAL_COMMANDS_COUNT;i++){
+  for(unsigned int i=0; i<TOTAL_COMMANDS_COUNT;i++){
     if (!cmd_b[i])
       continue;
-    switch(i) {
-      case 0 : // logs
-        system("cat /usr/local/tomcat/logs/catalina.out");
-        break;
-      case 1 : // restart
-        system("sh /usr/local/tomcat/bin/shutdown.sh");
-        system("sh /usr/local/tomcat/bin/startup.sh");
-        break;
+    
+    if(i==0){// logs
+      if(NON_SILENT_RUNNING)
+        cout<<"Reading Logs... "<<endl;
+      rderr(system("cat /usr/local/tomcat/logs/catalina.out"));
+      
+    }
+    else if(i==1){// restart
+      if(NON_SILENT_RUNNING)
+        cout<<"Restarting Tomcat... "<<endl;
+      rderr(system("sh /usr/local/tomcat/bin/shutdown.sh"));
+      rderr(system("sh /usr/local/tomcat/bin/startup.sh"));
     }
   }
   return 1;
@@ -34,14 +48,19 @@ int util::set_config(char* argv){
   string a = argv;
   for(unsigned int i=0;i<a.size();i++){
     switch(a[i]) {
+      case '-' : 
+        break;
       case 'l' : // cmd_b[0]
         cmd_b[0]=1;
         break;
       case 'X': // cmd_b[1]
         cmd_b[1]=1;
         break;
+      case 'S': // cmd_b[1]
+        NON_SILENT_RUNNING=0;
+        break;
       default :
-         cout << "Invalid command \""<< a[i] << << endl;
+         cout << "Invalid command \""<< a[i] <<"\""<< endl;
     }
   }
   return 1;
