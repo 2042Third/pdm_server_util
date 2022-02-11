@@ -14,9 +14,12 @@ using namespace std;
 
 class util {
 public:
+  util();
+  ~util();
   int rd_inp(unsigned int argc, char ** argv, string* infile);
   int run_util();
 private:
+  void* cli;
   int NON_SILENT_RUNNING =1;
   int cmd_b[3] = {0,0,0};
   string cmd[3] = {"-l: See Tomcat Logs", "-X: Restart Tomcat", "-c: clean logs"};

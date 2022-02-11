@@ -3,6 +3,7 @@
 //
 
 #include "util.h"
+#include "pdmCli.h"
 #include <iomanip>
 #include <numeric>
 #include <unistd.h>
@@ -45,6 +46,7 @@ int util::run_util(){
       rderr(system("echo \"\" > /usr/local/tomcat/logs/catalina.out"));
     }
   }
+  (*(pdmCli*)cli).run();
   return 1;
 }
 
@@ -92,25 +94,34 @@ int util::rd_inp(unsigned int argc, char ** argv, string *infile){
   int arg_c=1;
   for (unsigned int i = 1; i< argc;i++){
     if (argv[i][0] == '-'){
-      arg_c++;
       set_config(argv[i]);
     }
     else{
       if (infile->empty()){
         *infile = argv[i];
       }
-      else
-        return 0;
+      (*(pdmCli*)cli).add_command(string(argv[i]));
     }
+    arg_c++;
   }
   
   return arg_c;
 }
 
+util::util(){
+  cli=(void*)new pdmCli();
+
+}
+
+util::~util(){
+  if(cli!=NULL)
+    delete[] (pdmCli*)cli;
+}
+
 int main(int argc, char ** argv) {
   string infile,oufile,nonce;
   util utl;
-  if (utl.rd_inp(argc,argv,&infile)!=2){
+  if (utl.rd_inp(argc,argv,&infile)<2){
     cout<<"No input, -h for help."<<endl;
     return 0;
   }
