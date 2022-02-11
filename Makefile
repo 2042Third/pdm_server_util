@@ -8,9 +8,9 @@ linux:
 win:
 	g++ $(inc) $(srcs) -std=c++17 -Wall -o $(app_name)
 win_debug:
-	g++ $(inc) $(srcs) -std=c++17 -Wall -o $(app_name) -DWINDOWS_DEBUG -Wall
+	g++ $(inc) $(srcs) -std=c++17 -Wall -o $(app_name) -DPDM_DEBUG -Wall
 linux_debug:
-	g++ $(inc) $(srcs) -std=c++17 -Wall -g -DDEBUG -o $(app_name)
+	g++ $(inc) $(srcs) -std=c++17 -Wall -g -DPDM_DEBUG -o $(app_name)
 update_win:
 	mingw32-make win
 	xcopy /E /Y pdm.exe \ProgramData\pdm\bin 

@@ -9,6 +9,12 @@
 
 using namespace std;
 
+#ifdef PDM_DEBUG
+#define NON_SILENT_RUNNING 0
+#else 
+#define NON_SILENT_RUNNING 1
+#endif
+
 #define TOTAL_COMMANDS_COUNT              3 // make sure is same as the length of cmd_b
 #define TOTAL_HEADLESS_COMMANDS_COUNT     2 // make sure is same as the length of cmd_headless
 
@@ -20,10 +26,9 @@ public:
   int run_util();
 private:
   void* cli;
-  int NON_SILENT_RUNNING =1;
-  int cmd_b[3] = {0,0,0};
-  string cmd[3] = {"-l: See Tomcat Logs", "-X: Restart Tomcat", "-c: clean logs"};
-  string cmd_headless[2] = {"-S: silent", "-h: help"};
+  int cmd_b[TOTAL_COMMANDS_COUNT] = {0,0,0};
+  string cmd[TOTAL_COMMANDS_COUNT] = {"-l: See Tomcat Logs", "-X: Restart Tomcat", "-c: clean logs"};
+  string cmd_headless[TOTAL_HEADLESS_COMMANDS_COUNT] = { "-h: help"};
   int set_config(char* argv);
   int rderr(int err);
   void get_help_view();
