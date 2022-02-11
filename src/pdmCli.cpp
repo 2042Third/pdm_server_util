@@ -18,7 +18,15 @@ pdmCli::pdmCli(){
 }
 
 string pdmCli::comp_file_str(string entry_str){
-  return "javac -cp ..\\..\\lib\\*;"+comp_dir_lib+"\\classes\\lib\\*;"+comp_dir_lib+"\\classes\\. "+entry_str;
+  fs::path fp(".\\"+comp_dir_lib+"\\lib/");
+  string all_jars = "";
+  for (const auto & entry : fs::directory_iterator(fp)){
+    if(fs::is_regular_file(entry.path()) && entry.path().extension()==".jar"){
+      all_jars+=comp_dir_lib+"\\lib"+"\\"+entry.path().filename().string()+";";
+    }
+  }
+  // cout<<all_jars<<endl;
+  return "javac -cp ..\\..\\lib\\*;.\\"+all_jars+".\\"+comp_dir_lib+"\\classes\\. "+entry_str;
 }
 
 /**
