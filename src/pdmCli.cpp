@@ -10,6 +10,8 @@
 #include <iomanip>
 #include <unistd.h>
 #include <unordered_map>
+#include <chrono>
+#include <ctime>   
 
 using namespace std;
 namespace fs = filesystem;
@@ -32,17 +34,17 @@ string pdmCli::all_jars_str(){
 string pdmCli::comp_file_str(string entry_str){
   fs::path fp(".\\"+comp_dir_lib+"\\lib/");
   string ret_str;
-  string err_f = to_string(std::hash<std::string>{}(entry_str));
+  error_files = to_string(std::hash<std::string>{}(entry_str));
   if (SUPPRESS_JAVA_COMPILE_OUT){
     if(PDM_WINDOWS){
       ret_str ="javac -cp ..\\..\\lib\\*;.\\"+comp_dir_lib+"\\lib\\*;"+comp_dir_lib+
       "\\classes\\. "+entry_str+" > nul 2>> "+fs::temp_directory_path().string()+"\\"+err_f;
-      error_files+=", "+fs::temp_directory_path().string()+"\\"+err_f;
+      error_files+=", "+error_files;
     }    
     else {
       ret_str ="javac -cp ../../lib/*:./"+comp_dir_lib+"/lib/*:"+comp_dir_lib+
       "/classes/. "+entry_str+" > /dev/null 2>> "+fs::temp_directory_path().string()+"/"+err_f;
-      error_files+=", "+fs::temp_directory_path().string()+"/"+err_f;
+      error_files+=", "+error_files;
     }
   }
   else {
@@ -73,9 +75,9 @@ int pdmCli::comp_java(string path="./",int level=0){
   }
   if (level==0){
     cout<<"Compiled "<< compiled_java_count<<" java files"<<endl;
-    cout<<"Compiled "<< error_files<<" warnings files"<<endl;
     if(error_count!=0){
-      cout<<"Compile error "<< error_count<<" times, error output to \""<<fs::temp_directory_path().string()+"{"+error_files+"}"<<endl;
+      cout<<"Compile error "<< error_count<<" times, error output to \""<<fs::temp_directory_path().string()+"\\"+err_f<<endl;
+      cout<< error_files<<" warnings files"<<endl;
     }
   }
   return 1;
@@ -97,8 +99,21 @@ int pdmCli::clear_count(){
   return 1;
 }
 
-int pdmCli::run() {
+int pdmCli::init_run(){
   clear_count();
+  // time_t cur_t= std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+  time_t rawtime;
+
+  time (&rawtime);
+  string cur_time=string(ctime(&rawtime));
+  cur_time.erase(std::remove(cur_time.begin(), cur_time.end(), '\n'), cur_time.end());
+  system(("echo "+cur_time+" >> "+ fs::temp_directory_path().string()+"\\"+err_f).c_str());
+  system(("echo pdm client command: \""+comd+"\" >> "+ fs::temp_directory_path().string()+"\\"+err_f).c_str());
+  return 1;
+}
+
+int pdmCli::run() {
+  init_run();  
   if(comd.empty())
     return 0;
   if(comd=="compile-java"){

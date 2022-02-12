@@ -35,6 +35,8 @@ private:
   int compiled_java_count = 0;
   int error_count = 0;
   int clear_count();
+  int init_run();
+  std::string err_f = "pdm_client_errors.log";
   std::string error_files = "";
   std::string comp_dir="WEB-INF/classes";
   std::string comp_dir_lib="WEB-INF";
