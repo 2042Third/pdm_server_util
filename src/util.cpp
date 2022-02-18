@@ -85,7 +85,7 @@ int util::set_config(char* argv,int argc){
         return 1;
         break;
       default :
-         cout << "Invalid command \""<< a[i] <<"\""<< endl;
+         cout << "Invalid command \""<< argv[i] <<"\""<< endl;
     }
   }
   return 1;
