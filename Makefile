@@ -2,9 +2,9 @@
 app_name = pdm
 inc = -I./include/
 srcs = ./src/util.cpp ./src/pdmCli.cpp
-
+headless_srcs = ./src/util.cpp
 linux:
-	g++ $(inc) $(srcs) -std=c++17 -Wall -o $(app_name)
+	g++ $(inc) $(srcs) -std=c++17 -Wall -o $(app_name) -DHEADLESS
 win:
 	g++ $(inc) $(srcs) -std=c++17 -Wall -o $(app_name)
 win_debug:

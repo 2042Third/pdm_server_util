@@ -3,7 +3,9 @@
 //
 
 #include "util.h"
+#ifndef HEADLESS
 #include "pdmCli.h"
+#endif
 #include <iomanip>
 #include <numeric>
 #include <unistd.h>
@@ -100,7 +102,9 @@ int util::rd_inp(unsigned int argc, char ** argv, string *infile){
       if (infile->empty()){
         *infile = argv[i];
       }
+#ifndef HEADLESS
       (*(pdmCli*)cli).add_command(string(argv[i]));
+#endif
     }
     arg_c++;
   }
@@ -109,8 +113,9 @@ int util::rd_inp(unsigned int argc, char ** argv, string *infile){
 }
 
 util::util(){
+#ifndef HEADLESS
   cli=(void*)new pdmCli();
-
+#endif
 }
 
 util::~util(){
