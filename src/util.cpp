@@ -84,6 +84,7 @@ int util::set_config(char* argv){
       case 'h':
         get_help_view();
         return 1;
+        break;
       default :
          cout << "Invalid command \""<< a[i] <<"\""<< endl;
     }
