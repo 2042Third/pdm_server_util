@@ -68,6 +68,8 @@ void util::get_help_view (){
 
 int util::set_config(char* argv,int argc){
   for(unsigned int i=1;i<sizeof(argv)/sizeof(argv[0]);i++){
+    if(argv[i+1]=='\0')
+      cout << " is end at "<< i<< endl;
     switch(argv[i]) {
       case '-' : 
         break;
