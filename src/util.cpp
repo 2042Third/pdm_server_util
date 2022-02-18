@@ -48,7 +48,9 @@ int util::run_util(){
       rderr(system("echo \"\" > /usr/local/tomcat/logs/catalina.out"));
     }
   }
+#ifndef HEADLESS
   (*(pdmCli*)cli).run();
+#endif
   return 1;
 }
 
