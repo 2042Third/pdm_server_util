@@ -67,9 +67,8 @@ void util::get_help_view (){
 }
 
 int util::set_config(char* argv,int argc){
-  for(unsigned int i=1;i<sizeof(argv)/sizeof(argv[0]);i++){
-    if(argv[i+1]=='\0')
-      cout << " is end at "<< i<< endl;
+  int i=0;
+  while(argv[i]!='\0'){
     switch(argv[i]) {
       case '-' : 
         break;
@@ -89,6 +88,7 @@ int util::set_config(char* argv,int argc){
       default :
          cout << "Invalid command \""<< argv[i] <<"\""<< endl;
     }
+    i++;
   }
   return 1;
 }
