@@ -81,12 +81,12 @@ int util::set_config(char* argv){
       case 'c': // cmd_b[2]
         cmd_b[2]=1;
         break;
-      // case 'S':
-      //   NON_SILENT_RUNNING=0;
-      //   break;
       case 'h':
         get_help_view();
         return 1;
+      case 'S':
+        NON_SILENT_RUNNING=0;
+        break;
       default :
          cout << "Invalid command \""<< a[i] <<"\""<< endl;
     }
