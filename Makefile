@@ -16,4 +16,4 @@ update_win:
 	xcopy /E /Y pdm.exe \ProgramData\pdm\bin 
 update:
 	make linux
-	cp pdm /usr/bin/
+	cp pdm /usr/local/bin/
