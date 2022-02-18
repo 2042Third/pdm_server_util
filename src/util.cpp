@@ -119,8 +119,10 @@ util::util(){
 }
 
 util::~util(){
+#ifndef HEADLESS
   if(cli!=NULL)
     delete[] (pdmCli*)cli;
+#endif
 }
 
 int main(int argc, char ** argv) {
