@@ -66,9 +66,9 @@ void util::get_help_view (){
   cout<<endl;
 }
 
-int util::set_config(char* argv){
+int util::set_config(char* argv,int argc){
   string a = argv;
-  for(unsigned int i=0;i<a.size();i++){
+  for(unsigned int i=1;i<sizeof(argv);i++){
     switch(a[i]) {
       case '-' : 
         break;
@@ -96,7 +96,7 @@ int util::rd_inp(unsigned int argc, char ** argv, string *infile){
   int arg_c=1;
   for (unsigned int i = 1; i< argc;i++){
     if (argv[i][0] == '-'){
-      set_config(argv[i]);
+      set_config(argv[i],argc);
     }
     else{
       if (infile->empty()){
