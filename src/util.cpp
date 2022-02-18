@@ -67,9 +67,8 @@ void util::get_help_view (){
 }
 
 int util::set_config(char* argv,int argc){
-  string a = argv;
-  for(unsigned int i=1;i<sizeof(argv);i++){
-    switch(a[i]) {
+  for(unsigned int i=1;i<sizeof(argv)/sizeof(argv[0]);i++){
+    switch(argv[i]) {
       case '-' : 
         break;
       case 'l' : // cmd_b[0]
