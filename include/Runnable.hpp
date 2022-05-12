@@ -21,7 +21,7 @@ public:
   bool is_silent=0;
 };
 
-class LogsRead : public Runnable {
+class LogsRead : virtual public Runnable {
 public:
   LogsRead(){
     description = "See tomcat logs.";
@@ -35,7 +35,7 @@ public:
   }
 };
 
-class LogsClean : public Runnable {
+class LogsClean :virtual  public Runnable {
 public:
   
   LogsClean(){
@@ -61,7 +61,7 @@ public:
   
 };
 
-class RestartTomcat : public Runnable {
+class RestartTomcat :virtual  public Runnable {
 public:
   RestartTomcat(){
     description = "Restarts tomcat using provided scripts.";
@@ -76,7 +76,7 @@ public:
   }
 };
 
-class ToTomcatDir : public Runnable {
+class ToTomcatDir :virtual  public Runnable {
 public:
   ToTomcatDir(){
     description = "Go to the tomcat directory.";
