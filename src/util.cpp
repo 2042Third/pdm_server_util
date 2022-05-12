@@ -34,7 +34,7 @@ int util::run_util(){
 void util::get_help_view (){
   cout<<"pdm server-side utilities\n help menu\n"<<endl;
   for(Runnable f: app ){
-    cout<< f.match<<": "<<f.description<<endl;
+    cout<<"\t"<< f.match<<": "<<f.description<<endl;
   }
 }
 
@@ -46,10 +46,7 @@ int util::set_config(char* argv,int argc){
       i++;
       continue;
     }
-    // if (i+1 == argc)
-    //   return 1;
     for (Runnable f : app){
-      cout <<i <<" Matching command \""<< f.match <<"\""<< endl;
       if (f.matches(argv[i])){
         k=1;
         f.run();
