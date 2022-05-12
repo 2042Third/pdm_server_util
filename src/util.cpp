@@ -46,8 +46,8 @@ int util::set_config(char* argv,int argc){
       i++;
       continue;
     }
-    if (i+1 == argc)
-      return 1;
+    // if (i+1 == argc)
+    //   return 1;
     for (Runnable f : app){
       if (f.matches(argv[i])){
         k=1;
