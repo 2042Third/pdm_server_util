@@ -7,7 +7,9 @@ class Runnable {
 public:
   bool run () {return 0;};
   bool run (char a);
-  bool matches(char a) {return 0;};
+  bool matches(char a){
+    return a == match;
+  }
   bool matches(std::string a);
   std::string description;
   int rderr (int err){
@@ -27,15 +29,11 @@ public:
     description = "See tomcat logs.";
     match = 'l'; 
   }
-  
   bool run (){
     if(!is_silent)
       std::cout<<"Reading Logs... "<<std::endl;
     rderr(system("cat /usr/local/tomcat/logs/catalina.out"));
     return 1;
-  }
-  bool matches(char a){
-    return a == match;
   }
 };
 
@@ -62,9 +60,7 @@ public:
     rderr(system("echo \"\" > /usr/local/tomcat/logs/catalina.out"));
     return 1;
   }
-  bool matches(char a){
-    return a == match;
-  }
+  
 };
 
 class RestartTomcat : public Runnable {
@@ -79,8 +75,5 @@ public:
     rderr(system("sh /usr/local/tomcat/bin/shutdown.sh"));
     rderr(system("sh /usr/local/tomcat/bin/startup.sh"));
     return 1;
-  }
-  bool matches(char a){
-    return a == match;
   }
 };
