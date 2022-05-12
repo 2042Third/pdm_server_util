@@ -77,3 +77,17 @@ public:
     return 1;
   }
 };
+
+class ToTomcatDir : public Runnable {
+public:
+  ToTomcatDir(){
+    description = "Go to the tomcat directory.";
+    match = 't'; 
+  }
+  bool run (){
+    if(!is_silent)
+      std::cout<<"Going tomcat directory."<<std::endl;
+    rderr(system("cd /usr/local/tomcat"));
+    return 1;
+  }
+};
