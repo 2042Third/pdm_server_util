@@ -5,14 +5,9 @@
 
 class Runnable {
 public:
-  bool run () {
-    std::cout<<"Errors..."<<std::endl;
-    return 0;
-  }
+  virtual bool run () =0;
   bool run (char a);
-  bool matches(char a){
-    return a == match;
-  }
+  virtual bool matches(char a)=0;
   bool matches(std::string a);
   std::string description;
   int rderr (int err){
