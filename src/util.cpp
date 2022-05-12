@@ -71,6 +71,7 @@ void util::apps(){
   app.push_back(LogsRead());
   app.push_back(LogsClean());
   app.push_back(RestartTomcat());
+  app.push_back(ToTomcatDir());
 }
 
 int util::rd_inp(unsigned int argc, char ** argv, string *infile){
