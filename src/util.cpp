@@ -54,10 +54,10 @@ int util::set_config(char* argv,int argc){
         k=1;
         f.run();
       }
-      else if (argv[i] == 'h'){
-        k=1;
-        get_help_view();
-      }
+    }
+    if (argv[i] == 'h'){
+      k=1;
+      get_help_view();
     }
     if(!k)
       cout << "Invalid command \""<< argv[i] <<"\""<< endl;
