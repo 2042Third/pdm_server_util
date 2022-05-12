@@ -42,6 +42,10 @@ int util::set_config(char* argv,int argc){
   int i=0, k=0;
   while(argv[i]!='\0'){
     k=0;
+    if(argv[i] == '-'){
+      i++;
+      continue;
+    }
     for (Runnable f : app){
       if (f.matches(argv[i])){
         k=1;
