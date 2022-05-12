@@ -5,7 +5,10 @@
 
 class Runnable {
 public:
-  bool run () {return 0;};
+  bool run () {
+    std::cout<<"Errors..."<<std::endl;
+    return 0;
+  }
   bool run (char a);
   bool matches(char a){
     return a == match;
