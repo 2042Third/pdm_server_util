@@ -8,7 +8,7 @@ linux:
 win:
 	g++ $(inc) $(srcs) -std=c++17 -Wall -o $(app_name)
 win_debug:
-	g++ $(inc) $(srcs) -std=c++17 -Wall -o $(app_name) -DPDM_DEBUG -Wall
+	g++ $(inc) $(srcs) -std=c++17 -Wall -o $(app_name) -DPDM_DEBUG -Wall -g
 linux_debug:
 	g++ $(inc) $(srcs) -std=c++17 -Wall -g -DPDM_DEBUG -o $(app_name)
 update_win:

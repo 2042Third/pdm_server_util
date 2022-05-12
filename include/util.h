@@ -27,7 +27,7 @@ public:
   int run_util();
   void apps();
 private:
-  vector<Runnable> app ;
+  vector<Runnable*> app ;
   void* cli;
   int cmd_b[TOTAL_COMMANDS_COUNT] = {0,0,0};
   string cmd[TOTAL_COMMANDS_COUNT] = {"-l: See Tomcat Logs", "-X: Restart Tomcat", "-c: clean logs"};
@@ -35,5 +35,9 @@ private:
   int set_config(char* argv, int argc);
   int rderr(int err);
   void get_help_view();
+  LogsRead a1();
+  LogsClean a2();
+  RestartTomcat a3();
+  ToTomcatDir a4();
 };
 #endif //SERVER_UTIL

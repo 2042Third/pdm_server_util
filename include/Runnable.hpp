@@ -5,11 +5,10 @@
 
 class Runnable {
 public:
-  virtual bool run () =0;
-  bool run (char a);
+  virtual bool run ()=0 ;
+  // bool run (char a);
   virtual bool matches(char a)=0;
-  bool matches(std::string a);
-  std::string description;
+  // bool matches(std::string a);
   int rderr (int err){
     #ifdef DEBUG//debug
       cout<<"Output: "<< err<<endl;
@@ -17,31 +16,26 @@ public:
     #endif//debug
     return 1;
   }
-  char match ;
+  virtual std::string description()=0;
+  virtual char match ()=0;
   bool is_silent=0;
 };
 
-class LogsRead : virtual public Runnable {
+class LogsRead : public Runnable {
 public:
-  LogsRead(){
-    description = "See tomcat logs.";
-    match = 'l'; 
-  }
   bool run (){
     if(!is_silent)
       std::cout<<"Reading Logs... "<<std::endl;
     rderr(system("cat /usr/local/tomcat/logs/catalina.out"));
     return 1;
   }
+  bool matches (char a) {return match() == a;}
+  char match() {return 'l';}  
+  std::string description() { return "See tomcat logs.";}
 };
 
-class LogsClean :virtual  public Runnable {
+class LogsClean : public Runnable {
 public:
-  
-  LogsClean(){
-    description = "Clean and back up the logs.";
-    match = 'c'; 
-  }
   bool run (){
     auto t = std::time(nullptr);
     auto tm = *std::localtime(&t);
@@ -58,15 +52,13 @@ public:
     rderr(system("echo \"\" > /usr/local/tomcat/logs/catalina.out"));
     return 1;
   }
-  
+  bool matches (char a) {return match() == a;}
+  char match (){return 'c';}  
+  std::string description() { return "Back up and clear the logs.";}
 };
 
-class RestartTomcat :virtual  public Runnable {
+class RestartTomcat :public Runnable {
 public:
-  RestartTomcat(){
-    description = "Restarts tomcat using provided scripts.";
-    match = 'x'; 
-  }
   bool run (){
     if(!is_silent)
       std::cout<<"Restarting Tomcat... "<<std::endl;
@@ -74,18 +66,20 @@ public:
     rderr(system("sh /usr/local/tomcat/bin/startup.sh"));
     return 1;
   }
+  bool matches (char a) {return match() == a;}
+  char match() {return 'x'; }  
+  std::string description() { return "Restarts tomcat using provided scripts.";}
 };
 
-class ToTomcatDir :virtual  public Runnable {
+class ToTomcatDir :public Runnable {
 public:
-  ToTomcatDir(){
-    description = "Go to the tomcat directory.";
-    match = 't'; 
-  }
   bool run (){
     if(!is_silent)
       std::cout<<"Going tomcat directory."<<std::endl;
     rderr(system("cd /usr/local/tomcat"));
     return 1;
   }
+  bool matches (char a) {return match() == a;}
+  char match() {return 't';}  
+  std::string description() { return "Go to the tomcat directory.";}
 };

@@ -33,8 +33,8 @@ int util::run_util(){
 
 void util::get_help_view (){
   cout<<"pdm server-side utilities\n help menu\n"<<endl;
-  for(Runnable f: app ){
-    cout<<"\t"<< f.match<<": "<<f.description<<endl;
+  for(Runnable* f: app ){
+    cout<<"\t"<< f->match()<<": "<<f->description()<<endl;
   }
 }
 
@@ -46,10 +46,10 @@ int util::set_config(char* argv,int argc){
       i++;
       continue;
     }
-    for (Runnable f : app){
-      if (f.matches(argv[i])){
+    for (Runnable* f : app){
+      if (f->matches(argv[i])){
         k=1;
-        f.run();
+        f->run();
       }
     }
     if (argv[i] == 'h'){
@@ -68,10 +68,10 @@ int util::set_config(char* argv,int argc){
  * 
  * */
 void util::apps(){
-  app.push_back(LogsRead());
-  app.push_back(LogsClean());
-  app.push_back(RestartTomcat());
-  app.push_back(ToTomcatDir());
+  app.push_back(new LogsRead());
+  app.push_back(new LogsClean());
+  app.push_back(new RestartTomcat());
+  app.push_back(new ToTomcatDir());
 }
 
 int util::rd_inp(unsigned int argc, char ** argv, string *infile){
@@ -103,6 +103,8 @@ util::util(){
 }
 
 util::~util(){
+  for (unsigned int i = 0; i< app.size();i++)
+    delete app[i];
 #ifndef HEADLESS
   if(cli!=NULL)
     delete[] (pdmCli*)cli;
