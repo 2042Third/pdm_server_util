@@ -33,17 +33,12 @@ int util::run_util(){
 
 void util::get_help_view (){
   cout<<"pdm server-side utilities\n help menu\n"<<endl;
-  for(unsigned int i=0 ; i< TOTAL_COMMANDS_COUNT;i++){
-    cout<<cmd[i]<<endl;
+  for(Runnable f: app ){
+    cout<< f.match<<": "<<f.description<<endl;
   }
-  cout<<endl;
-  for(unsigned int i=0 ; i< TOTAL_HEADLESS_COMMANDS_COUNT;i++){
-    cout<<cmd_headless[i]<<endl;
-  }
-  cout<<endl;
 }
 
-int util::set_config(char* argv,int argc, std::vector<Runnable> app){
+int util::set_config(char* argv,int argc){
   int i=0, k=0;
   while(argv[i]!='\0'){
     k=0;
@@ -51,6 +46,10 @@ int util::set_config(char* argv,int argc, std::vector<Runnable> app){
       if (f.matches(argv[i])){
         k=1;
         f.run();
+      }
+      else if (argv[i] == 'h'){
+        k=1;
+        get_help_view();
       }
     }
     if(!k)
@@ -74,11 +73,10 @@ vector<Runnable> util::apps(){
 
 int util::rd_inp(unsigned int argc, char ** argv, string *infile){
   int arg_c=1;
-  vector<Runnable> app = apps();
 
   for (unsigned int i = 1; i< argc;i++){
     if (argv[i][0] == '-'){
-      set_config(argv[i],argc, app);
+      set_config(argv[i],argc);
     }
     else{
       if (infile->empty()){
@@ -95,6 +93,7 @@ int util::rd_inp(unsigned int argc, char ** argv, string *infile){
 }
 
 util::util(){
+  app = apps();
 #ifndef HEADLESS
   cli=(void*)new pdmCli();
 #endif

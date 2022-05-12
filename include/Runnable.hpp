@@ -17,9 +17,8 @@ public:
     #endif//debug
     return 1;
   }
-protected:
-  bool is_silent=0;
   char match ;
+  bool is_silent=0;
 };
 
 class LogsRead : public Runnable {
@@ -34,7 +33,6 @@ public:
     return a == match;
   }
   std::string description = "See tomcat logs.";
-protected:
   char match = 'l';
 };
 
@@ -60,7 +58,6 @@ public:
     return a == match;
   }
   std::string description = "Clean and back up the logs.";
-protected:
   char match = 'c';
 };
 
@@ -77,6 +74,5 @@ public:
     return a == match;
   }
   std::string description = "Restarts tomcat using provided scripts.";
-protected:
   char match = 'x';
 };
