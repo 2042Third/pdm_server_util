@@ -49,6 +49,7 @@ int util::set_config(char* argv,int argc){
     // if (i+1 == argc)
     //   return 1;
     for (Runnable f : app){
+      cout << "Matching command \""<< f.match <<"\""<< endl;
       if (f.matches(argv[i])){
         k=1;
         f.run();
