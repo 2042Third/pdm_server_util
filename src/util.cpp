@@ -69,12 +69,10 @@ int util::set_config(char* argv,int argc){
  * Get a vector of all features of the application
  * 
  * */
-vector<Runnable> util::apps(){
-  vector<Runnable> app;
+void util::apps(){
   app.push_back(LogsRead());
   app.push_back(LogsClean());
   app.push_back(RestartTomcat());
-  return app;
 }
 
 int util::rd_inp(unsigned int argc, char ** argv, string *infile){
@@ -99,7 +97,7 @@ int util::rd_inp(unsigned int argc, char ** argv, string *infile){
 }
 
 util::util(){
-  app = apps();
+  apps();
 #ifndef HEADLESS
   cli=(void*)new pdmCli();
 #endif

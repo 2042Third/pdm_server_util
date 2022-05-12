@@ -25,7 +25,7 @@ public:
   ~util();
   int rd_inp(unsigned int argc, char ** argv, string* infile);
   int run_util();
-  std::vector<Runnable> apps();
+  void apps();
 private:
   vector<Runnable> app ;
   void* cli;
