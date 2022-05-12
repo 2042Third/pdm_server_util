@@ -43,28 +43,18 @@ void util::get_help_view (){
   cout<<endl;
 }
 
-int util::set_config(char* argv,int argc){
-  int i=0;
+int util::set_config(char* argv,int argc, std::vector<Runnable> app){
+  int i=0, k=0;
   while(argv[i]!='\0'){
-    switch(argv[i]) {
-      case '-' : 
-        break;
-      case 'l' : // cmd_b[0]
-        cmd_b[0]=1;
-        break;
-      case 'X': // cmd_b[1]
-        cmd_b[1]=1;
-        break;
-      case 'c': // cmd_b[2]
-        cmd_b[2]=1;
-        break;
-      case 'h':
-        get_help_view();
-        return 1;
-        break;
-      default :
-         cout << "Invalid command \""<< argv[i] <<"\""<< endl;
+    k=0;
+    for (Runnable f : app){
+      if (f.matches(argv[i])){
+        k=1;
+        f.run();
+      }
     }
+    if(!k)
+      cout << "Invalid command \""<< argv[i] <<"\""<< endl;
     i++;
   }
   return 1;
@@ -88,7 +78,7 @@ int util::rd_inp(unsigned int argc, char ** argv, string *infile){
 
   for (unsigned int i = 1; i< argc;i++){
     if (argv[i][0] == '-'){
-      set_config(argv[i],argc);
+      set_config(argv[i],argc, app);
     }
     else{
       if (infile->empty()){

@@ -5,9 +5,9 @@
 
 class Runnable {
 public:
-  bool run ();
+  bool run () {return 0;};
   bool run (char a);
-  bool matches(char a);
+  bool matches(char a) {return 0;};
   bool matches(std::string a);
   std::string description;
   int rderr (int err){
