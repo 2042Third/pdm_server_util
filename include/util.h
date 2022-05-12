@@ -5,8 +5,9 @@
 #ifndef SERVER_UTIL
 #define SERVER_UTIL
 #include <stdio.h>
+#include "Runnable.hpp"
 #include <string>
-
+#include <vector>
 using namespace std;
 
 #ifdef PDM_DEBUG
@@ -24,6 +25,7 @@ public:
   ~util();
   int rd_inp(unsigned int argc, char ** argv, string* infile);
   int run_util();
+  std::vector<Runnable> apps();
 private:
   void* cli;
   int cmd_b[TOTAL_COMMANDS_COUNT] = {0,0,0};

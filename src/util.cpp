@@ -14,39 +14,16 @@
 #include <vector>
 #include <iostream>
 #include <stdio.h>
+#include <vector>
+#include <ctime>
 
 using namespace std;
 
-int util::rderr (int err){
-  #ifdef DEBUG//debug
-    cout<<"Output: "<< err<<endl;
-    system("ls");
-  #endif//debug
-  return 1;
-}
+
 
 int util::run_util(){
   for(unsigned int i=0; i<TOTAL_COMMANDS_COUNT;i++){
-    if (!cmd_b[i])
-      continue;
     
-    if(i==0){// logs
-      if(NON_SILENT_RUNNING)
-        cout<<"Reading Logs... "<<endl;
-      rderr(system("cat /usr/local/tomcat/logs/catalina.out"));
-      
-    }
-    else if(i==1){// restart
-      if(NON_SILENT_RUNNING)
-        cout<<"Restarting Tomcat... "<<endl;
-      rderr(system("sh /usr/local/tomcat/bin/shutdown.sh"));
-      rderr(system("sh /usr/local/tomcat/bin/startup.sh"));
-    }
-    else if(i==2){// clean logs
-      if(NON_SILENT_RUNNING)
-        cout<<"Cleaning logs... "<<endl;
-      rderr(system("echo \"\" > /usr/local/tomcat/logs/catalina.out"));
-    }
   }
 #ifndef HEADLESS
   (*(pdmCli*)cli).run();
@@ -93,8 +70,22 @@ int util::set_config(char* argv,int argc){
   return 1;
 }
 
+/**
+ * Get a vector of all features of the application
+ * 
+ * */
+vector<Runnable> util::apps(){
+  vector<Runnable> app;
+  app.push_back(LogsRead());
+  app.push_back(LogsClean());
+  app.push_back(RestartTomcat());
+  return app;
+}
+
 int util::rd_inp(unsigned int argc, char ** argv, string *infile){
   int arg_c=1;
+  vector<Runnable> app = apps();
+
   for (unsigned int i = 1; i< argc;i++){
     if (argv[i][0] == '-'){
       set_config(argv[i],argc);
