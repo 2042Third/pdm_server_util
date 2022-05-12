@@ -23,6 +23,11 @@ public:
 
 class LogsRead : public Runnable {
 public:
+  LogsRead(){
+    description = "See tomcat logs.";
+    match = 'l'; 
+  }
+  
   bool run (){
     if(!is_silent)
       std::cout<<"Reading Logs... "<<std::endl;
@@ -32,12 +37,15 @@ public:
   bool matches(char a){
     return a == match;
   }
-  std::string description = "See tomcat logs.";
-  char match = 'l';
 };
 
 class LogsClean : public Runnable {
 public:
+  
+  LogsClean(){
+    description = "Clean and back up the logs.";
+    match = 'c'; 
+  }
   bool run (){
     auto t = std::time(nullptr);
     auto tm = *std::localtime(&t);
@@ -57,12 +65,14 @@ public:
   bool matches(char a){
     return a == match;
   }
-  std::string description = "Clean and back up the logs.";
-  char match = 'c';
 };
 
 class RestartTomcat : public Runnable {
 public:
+  RestartTomcat(){
+    description = "Restarts tomcat using provided scripts.";
+    match = 'x'; 
+  }
   bool run (){
     if(!is_silent)
       std::cout<<"Restarting Tomcat... "<<std::endl;
@@ -73,6 +83,4 @@ public:
   bool matches(char a){
     return a == match;
   }
-  std::string description = "Restarts tomcat using provided scripts.";
-  char match = 'x';
 };
