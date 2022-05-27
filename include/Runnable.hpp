@@ -48,6 +48,7 @@ public:
       std::cout<<"Cleaning logs... "<<std::endl;
     system(command_out.data());
     rderr(system("echo \"\" > /usr/local/tomcat/logs/catalina.out"));
+    rderr(system("chmod 777 /usr/local/tomcat/logs/*"));
     rderr(system("chown tomcat:tomcat /usr/local/tomcat/logs/*"));
     
     return 1;
