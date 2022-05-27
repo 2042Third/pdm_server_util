@@ -6,9 +6,7 @@
 class Runnable {
 public:
   virtual bool run ()=0 ;
-  // bool run (char a);
   virtual bool matches(char a)=0;
-  // bool matches(std::string a);
   int rderr (int err){
     #ifdef DEBUG//debug
       cout<<"Output: "<< err<<endl;
@@ -50,6 +48,8 @@ public:
       std::cout<<"Cleaning logs... "<<std::endl;
     system(command_out.data());
     rderr(system("echo \"\" > /usr/local/tomcat/logs/catalina.out"));
+    rderr(system("chown tomcat:tomcat /usr/local/tomcat/logs/*"));
+    
     return 1;
   }
   bool matches (char a) {return match() == a;}

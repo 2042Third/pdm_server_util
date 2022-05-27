@@ -35,9 +35,6 @@ private:
   int set_config(char* argv, int argc);
   int rderr(int err);
   void get_help_view();
-  LogsRead a1();
-  LogsClean a2();
-  RestartTomcat a3();
-  ToTomcatDir a4();
+  
 };
 #endif //SERVER_UTIL
