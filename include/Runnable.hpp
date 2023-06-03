@@ -24,7 +24,7 @@ public:
   bool run (){
     if(!is_silent)
       std::cout<<"Reading Logs... "<<std::endl;
-    rderr(system("cat /usr/local/tomcat/logs/catalina.out"));
+    rderr(system("cat /opt/tomcat/latest/logs/catalina.out"));
     return 1;
   }
   bool matches (char a) {return match() == a;}
@@ -41,15 +41,15 @@ public:
     oss << std::put_time(&tm, "%d-%m-%Y_%H-%M-%S");
     auto time_str = oss.str();
 
-    std::string command_out = "mv /usr/local/tomcat/logs/catalina.out /usr/local/tomcat/logs/back_";
+    std::string command_out = "mv /opt/tomcat/latest/logs/catalina.out /opt/tomcat/latest/logs/back_";
     command_out += time_str;
     command_out += ".txt";
     if(!is_silent)
       std::cout<<"Cleaning logs... "<<std::endl;
     system(command_out.data());
-    rderr(system("echo \"\" > /usr/local/tomcat/logs/catalina.out"));
-    rderr(system("chmod 777 /usr/local/tomcat/logs/*"));
-    rderr(system("chown tomcat:tomcat /usr/local/tomcat/logs/*"));
+    rderr(system("echo \"\" > /opt/tomcat/latest/logs/catalina.out"));
+    rderr(system("chmod 777 /opt/tomcat/latest/logs/*"));
+    rderr(system("chown tomcat:tomcat /opt/tomcat/latest/logs/*"));
     
     return 1;
   }
@@ -63,8 +63,8 @@ public:
   bool run (){
     if(!is_silent)
       std::cout<<"Restarting Tomcat... "<<std::endl;
-    rderr(system("sh /usr/local/tomcat/bin/shutdown.sh"));
-    rderr(system("sh /usr/local/tomcat/bin/startup.sh"));
+    rderr(system("sh /opt/tomcat/latest/bin/shutdown.sh"));
+    rderr(system("sh /opt/tomcat/latest/bin/startup.sh"));
     return 1;
   }
   bool matches (char a) {return match() == a;}
@@ -77,7 +77,7 @@ public:
   bool run (){
     if(!is_silent)
       std::cout<<"Going tomcat directory."<<std::endl;
-    rderr(system("cd /usr/local/tomcat"));
+    rderr(system("cd /opt/tomcat/latest"));
     return 1;
   }
   bool matches (char a) {return match() == a;}
