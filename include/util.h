@@ -8,6 +8,8 @@
 #include "Runnable.hpp"
 #include <string>
 #include <vector>
+#include <unordered_map>
+
 using namespace std;
 
 #ifdef PDM_DEBUG
@@ -27,12 +29,12 @@ public:
   int run_util();
   void apps();
 private:
-  vector<Runnable*> app ;
+  std::unordered_map<std::string, std::unique_ptr<Runnable>> app;
   void* cli;
   int cmd_b[TOTAL_COMMANDS_COUNT] = {0,0,0};
   string cmd[TOTAL_COMMANDS_COUNT] = {"-l: See Tomcat Logs", "-X: Restart Tomcat", "-c: clean logs"};
   string cmd_headless[TOTAL_HEADLESS_COMMANDS_COUNT] = { "-h: help"};
-  int set_config(char* argv, int argc);
+  int set_config(const char* argv, int argc);
   int rderr(int err);
   void get_help_view();
   

@@ -33,32 +33,21 @@ int util::run_util(){
 
 void util::get_help_view (){
   cout<<"pdm server-side utilities\n help menu\n"<<endl;
-  for(Runnable* f: app ){
-    cout<<"\t"<< f->match()<<": "<<f->description()<<endl;
+  for(const auto& f: app){
+    cout<<"\t"<< f.second->match()<<": "<<f.second->description()<<endl;
   }
 }
 
-int util::set_config(char* argv,int argc){
-  int i=0, k=0;
-  while(argv[i]!='\0'){
-    k=0;
-    if(argv[i] == '-'){
-      i++;
-      continue;
-    }
-    for (Runnable* f : app){
-      if (f->matches(argv[i])){
-        k=1;
-        f->run();
-      }
-    }
-    if (argv[i] == 'h'){
-      k=1;
+int util::set_config(const char* argv,int argc){
+  for(int i = 1; i < argc; i++){
+    std::string arg(1,argv[i]);
+    if(arg == "-h") {
       get_help_view();
+    } else if(app.find(arg) != app.end()) {
+      app[arg]->run();
+    } else {
+      std::cout << "Invalid command \"" << arg << "\"\n";
     }
-    if(!k)
-      cout << "Invalid command \""<< argv[i] <<"\""<< endl;
-    i++;
   }
   return 1;
 }
@@ -68,10 +57,10 @@ int util::set_config(char* argv,int argc){
  * 
  * */
 void util::apps(){
-  app.push_back(new LogsRead());
-  app.push_back(new LogsClean());
-  app.push_back(new RestartTomcat());
-  app.push_back(new ToTomcatDir());
+  app["h"] = std::make_unique<LogsRead>();
+  app["c"] = std::make_unique<LogsClean>();
+  app["x"] = std::make_unique<RestartTomcat>();
+
 }
 
 int util::rd_inp(unsigned int argc, char ** argv, string *infile){
@@ -103,21 +92,10 @@ util::util(){
 }
 
 util::~util(){
-  for (unsigned int i = 0; i< app.size();i++)
-    delete app[i];
+
 #ifndef HEADLESS
   if(cli!=NULL)
-    delete[] (pdmCli*)cli;
+    delete (pdmCli*)cli;
 #endif
 }
 
-int main(int argc, char ** argv) {
-  string infile,oufile,nonce;
-  util utl;
-  if (utl.rd_inp(argc,argv,&infile)<2){
-    cout<<"No input, -h for help."<<endl;
-    return 0;
-  }
-  utl.run_util();
-  return 0;
-}
